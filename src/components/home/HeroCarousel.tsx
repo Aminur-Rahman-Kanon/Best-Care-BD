@@ -61,7 +61,7 @@ export default function HeroCarousel({
               key={banner._id}
               className="embla__slide min-w-0 flex-[0_0_100%]"
             >
-              <div className="relative w-full aspect-[4/3] min-h-[200px] max-h-[45vh] sm:aspect-[16/9] sm:min-h-[240px] sm:max-h-[50vh] md:aspect-[21/9] md:min-h-[280px] md:max-h-[55vh] lg:aspect-[3/1] lg:min-h-[320px] lg:max-h-[600px]">
+              <div className="relative w-full aspect-[3/2] sm:aspect-[3/1]">
                 <Image
                   src={banner.imageUrl}
                   alt={banner.title || "Promotional banner"}

@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { X, Instagram, Facebook, Twitter } from "lucide-react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookSquare, faInstagramSquare, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from "react";
 
 const navLinks = [
@@ -11,9 +13,9 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { href: "https://instagram.com", label: "Instagram", icon: Instagram },
-  { href: "https://facebook.com", label: "Facebook", icon: Facebook },
-  { href: "https://twitter.com", label: "Twitter", icon: Twitter },
+  { href: "https://instagram.com", label: "Instagram", icon: faInstagramSquare },
+  { href: "https://facebook.com", label: "Facebook", icon: faFacebookSquare },
+  { href: "https://twitter.com", label: "Twitter", icon: faXTwitter },
 ];
 
 export default function MobileMenu({
@@ -55,7 +57,7 @@ export default function MobileMenu({
             className="rounded-full p-2 text-brand-gray transition-colors hover:bg-gray-100 hover:text-brand-dark"
             aria-label="Close menu"
           >
-            <X className="h-6 w-6" />
+            <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
 
@@ -86,7 +88,7 @@ export default function MobileMenu({
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 text-brand-gray transition-colors hover:border-accent hover:bg-accent/10 hover:text-accent"
                 aria-label={label}
               >
-                <Icon className="h-5 w-5" />
+                <FontAwesomeIcon icon={Icon} />
               </a>
             ))}
           </div>

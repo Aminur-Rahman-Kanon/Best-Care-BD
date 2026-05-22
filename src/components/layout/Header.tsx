@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ShoppingCart, Search, Menu, X } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping, faMagnifyingGlass, faBars, faXmark, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useCallback, useEffect, useState, Suspense } from "react";
 import CartBadge from "./CartBadge";
 import MobileMenu from "./MobileMenu";
@@ -77,7 +78,7 @@ function SearchPanel({
           className="p-2 text-brand-gray transition-colors hover:text-accent"
           aria-label="Close search"
         >
-          <X className="h-5 w-5" />
+          <FontAwesomeIcon icon={faXmark} />
         </button>
       </form>
     </div>
@@ -99,7 +100,7 @@ function HeaderInner() {
               className="p-2 text-brand-gray transition-colors hover:text-accent md:hidden"
               aria-label="Open menu"
             >
-              <Menu className="h-5 w-5" />
+              <FontAwesomeIcon icon={faBars} />
             </button>
             <nav className="hidden items-center gap-6 md:flex">
               <Link
@@ -133,14 +134,14 @@ function HeaderInner() {
               aria-label="Search products"
               aria-expanded={searchOpen}
             >
-              <Search className="h-5 w-5" />
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
             <Link
               href="/cart"
               className="relative p-2 text-brand-gray transition-colors hover:text-accent"
               aria-label="Shopping cart"
             >
-              <ShoppingCart className="h-5 w-5" />
+              <FontAwesomeIcon icon={faShoppingCart} />
               <CartBadge />
             </Link>
           </div>
