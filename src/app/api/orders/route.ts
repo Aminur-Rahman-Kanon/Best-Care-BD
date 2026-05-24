@@ -82,22 +82,23 @@ export async function POST(req: NextRequest) {
       items: orderItems,
       total,
       status: "pending",
+      paymentStatus: 'pending'
     });
 
-    try {
-      await sendOrderConfirmationEmail({
-        orderId,
-        fullName: customer.fullName,
-        address: customer.address,
-        phone: customer.phone,
-        email: customer.email,
-        paymentMethod: customer.paymentMethod || "Cash on Delivery",
-        items: orderItems,
-        total,
-      });
-    } catch (emailError) {
-      console.error("Email send failed:", emailError);
-    }
+    // try {
+    //   await sendOrderConfirmationEmail({
+    //     orderId,
+    //     fullName: customer.fullName,
+    //     address: customer.address,
+    //     phone: customer.phone,
+    //     email: customer.email,
+    //     paymentMethod: customer.paymentMethod || "Cash on Delivery",
+    //     items: orderItems,
+    //     total,
+    //   });
+    // } catch (emailError) {
+    //   console.error("Email send failed:", emailError);
+    // }
 
     return NextResponse.json({ orderId: order.orderId, _id: order._id }, { status: 201 });
   } catch (error) {

@@ -3,7 +3,7 @@ import CheckoutForm from "@/components/checkout/CheckoutForm";
 
 export const metadata: Metadata = {
   title: "Checkout",
-  description: "Complete your Mela order with cash on delivery.",
+  description: "Complete your order with Bkash or cash on delivery.",
   robots: { index: false, follow: true },
 };
 

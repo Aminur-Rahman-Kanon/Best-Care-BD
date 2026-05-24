@@ -44,7 +44,7 @@ export default function CheckoutForm() {
     setError("");
 
     try {
-      const res = await fetch("/api/orders", {
+      const checkoutRes = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -56,12 +56,30 @@ export default function CheckoutForm() {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Checkout failed");
+      const data = await checkoutRes.json();
+      if (!checkoutRes.ok) throw new Error(data.error || "Checkout failed");
 
-      clearCart();
-      setSuccess(data.orderId);
-      setTimeout(() => router.push("/"), 5000);
+      if (form.paymentMethod === 'Bkash'){
+        const createPaymentRequest = await fetch('/api/bkash/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ orderId: data.orderId })
+        })
+  
+        const response = await createPaymentRequest.json();
+        if (!response?.url){
+          throw new Error('payment request failed');
+        }
+  
+        return window.location.href = response.url;
+      }
+      else {
+        clearCart();
+        setSuccess(data.orderId);
+        return setTimeout(() => router.push("/"), 5000);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Checkout failed");
     } finally {
@@ -153,6 +171,7 @@ export default function CheckoutForm() {
             className="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-accent"
           >
             <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="Bkash">Bkash</option>
           </select>
         </div>
       </div>

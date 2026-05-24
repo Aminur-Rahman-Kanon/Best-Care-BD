@@ -29,6 +29,24 @@ const OrderSchema = new Schema(
       enum: ["pending", "confirmed", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
+    payment: {
+      paymentMethod: {
+        type: String,
+        enum: ['cash on delivery', 'bkash'],
+        default: 'cash on delivery'
+      },
+      paymentStatus: {
+        type: String,
+        enum: ['pending', 'paid', 'failed'],
+        default: 'pending'
+      },
+      paymentToken: {
+        type: String,
+      },
+      paymentId: {
+        type: String
+      }
+    }
   },
   { timestamps: true }
 );

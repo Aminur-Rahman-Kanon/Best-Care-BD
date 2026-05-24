@@ -110,6 +110,12 @@ function HeaderInner() {
                 Home
               </Link>
               <Link
+                href="/about"
+                className="text-sm uppercase tracking-wider text-brand-gray transition-colors hover:text-accent"
+              >
+                About
+              </Link>
+              <Link
                 href="/cart"
                 className="text-sm uppercase tracking-wider text-brand-gray transition-colors hover:text-accent"
               >

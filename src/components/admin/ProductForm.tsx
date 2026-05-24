@@ -23,7 +23,7 @@ export default function ProductForm({ product }: ProductFormProps) {
     details: product?.details || "",
     description: product?.description || "",
     price: product?.price?.toString() || "",
-    stock: product?.stock?.toString() || "0",
+    stock: product?.stock?.toString() || "1",
     seoTitle: product?.seoTitle || "",
     seoDescription: product?.seoDescription || "",
   });
@@ -64,6 +64,12 @@ export default function ProductForm({ product }: ProductFormProps) {
     e.preventDefault();
     setLoading(true);
     setError("");
+
+    if (!product && Number(form.stock) < 1) {
+      setError("Stock must be at least 1 for new products.");
+      setLoading(false);
+      return;
+    }
 
     const payload = {
       ...form,
@@ -113,7 +119,12 @@ export default function ProductForm({ product }: ProductFormProps) {
               type={"type" in f ? f.type : "text"}
               value={form[f.name]}
               onChange={handleChange}
-              required={f.name === "title" || f.name === "price"}
+              required={
+                f.name === "title" ||
+                f.name === "price" ||
+                (f.name === "stock" && !product)
+              }
+              min={f.name === "stock" && !product ? 1 : undefined}
               className="w-full rounded border border-gray-300 px-3 py-2 text-sm"
             />
           </div>

@@ -48,6 +48,15 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
     const body = await req.json();
+
+    const stock = Number(body.stock);
+    if (!Number.isFinite(stock) || stock < 1) {
+      return NextResponse.json(
+        { error: "Stock must be at least 1" },
+        { status: 400 }
+      );
+    }
+
     const baseSlug = slugify(body.slug || body.title);
 
     const slug = await ensureUniqueSlug(
@@ -62,7 +71,7 @@ export async function POST(req: NextRequest) {
       description: body.description || "",
       price: Number(body.price),
       images: body.images || [],
-      stock: Number(body.stock) || 0,
+      stock,
       seoTitle: body.seoTitle || body.title,
       seoDescription: body.seoDescription || body.description || "",
     });
