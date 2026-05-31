@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
-import type { ProductDTO } from "@/types";
+import type { ProductDTO } from "@/types/server";
 
 export default function ProductTable({
   products: initial,

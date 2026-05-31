@@ -1,9 +1,9 @@
 import HeroCarousel from "@/components/home/HeroCarousel";
 import ProductGrid from "@/components/home/ProductGrid";
 import { getProducts } from "@/lib/products";
-import { connectDB } from "@/lib/mongodb";
-import Banner from "@/models/Banner";
-import type { BannerDTO } from "@/types";
+import { connectDB } from "@/lib/db/mongodb";
+import Banner from "@/lib/db/models/Banner";
+import type { BannerDTO } from "@/types/server";
 
 interface HomeProps {
   searchParams: Promise<{ q?: string }>;

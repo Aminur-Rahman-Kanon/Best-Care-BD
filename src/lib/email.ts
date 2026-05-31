@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import type { OrderItem } from "@/types";
+import type { OrderItem } from "@/types/server";
 
 interface OrderEmailData {
   orderId: string;

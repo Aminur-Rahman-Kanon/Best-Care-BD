@@ -1,32 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from '@/lib/mongodb';
-import Order from '@/models/Order';
-import { authHeaders } from '@/app/utilities/utilities';
-
-const bkashConfig = { 
-    base_url: process.env.BKASH_BASE_URL,
-    username: process.env.BKASH_USERNAME,
-    password: process.env.BKASH_PASSWORD,
-    app_key: process.env.BKASH_APP_KEY,
-    app_secret: process.env.BKASH_APP_SECRET
-}
+import { connectDB } from '@/lib/db/mongodb';
+import Order from '@/lib/db/models/Order';
+import { authHeaders, bkashConfig } from '@/app/utilities/utilities';
 
 export async function POST( req: NextRequest ) {
     try {
-        const { orderId } = await req.json();
+        connectDB();
+
+        const { orderId, orderToken } = await req.json();
     
-        if (!orderId) return NextResponse.json(
-            { message: 'order id not found' },
+        if (!orderId || !orderToken) return NextResponse.json(
+            { message: 'order id/token not found' },
             { status: 401 }
         )
     
-        const orders = await Order.findOne({ orderId });
+        const orders = await Order.findOne({
+            orderId,
+            orderToken
+        });
     
         if (!orders) return NextResponse.json(
-            { message: 'item not found' },
+            { message: 'Order not found' },
             { status: 404 }
         )
 
+        if (orders.payment.paymentStatus === 'initiated') return NextResponse.json(
+            { message: 'Payment already initiated!' },
+            { status: 403 }
+        )
+
+        if (orders.payment.paymentStatus === 'paid') return NextResponse.json(
+            { message: 'Its already paid.' },
+            { status: 202 }
+        )
+
+        const verifiedOrderId = orders.orderId;
+        const verifiedOrderToken = orders.orderToken;
     
         //figure out prices for the products
         let totalPrice = 0;
@@ -34,9 +43,16 @@ export async function POST( req: NextRequest ) {
             totalPrice += (item.price * item.quantity);
         }
 
-        const myURL = req.headers.get('origin');
+        const myURL = process.env.APP_URL ?? (
+            process.env.NODE_ENV === 'development' ?
+            'http://localhost:3000'
+            :
+            undefined
+        )
 
-        const authHeader = await authHeaders(bkashConfig, orderId);
+        if (!myURL) throw new Error('APP_URL is not required.')
+
+        const authHeader = await authHeaders(bkashConfig, verifiedOrderId, verifiedOrderToken);
 
         const bkashResponseBody = await fetch(`${bkashConfig.base_url}/tokenized/checkout/create`, {
             method: 'POST',
@@ -48,12 +64,20 @@ export async function POST( req: NextRequest ) {
                 amount: totalPrice,
                 callbackURL: `${myURL}/api/bkash/callback`,
                 payerReference: '1',
-                merchantInvoiceNumber: orderId
+                merchantInvoiceNumber: verifiedOrderId
             })
         })
 
+        if (!bkashResponseBody.ok) throw new Error('Bkash token creation failed.')
+
         const bkashResponse = await bkashResponseBody.json();
-        if (bkashResponse.statusCode !== '0000'){
+
+        if (
+            bkashResponse.statusCode !== '0000' ||
+            !bkashResponse.bkashURL ||
+            !bkashResponse.paymentID
+        )
+        {
             return NextResponse.json(
                 { message: 'payment failed' },
                 { status: 400 }
@@ -61,7 +85,10 @@ export async function POST( req: NextRequest ) {
         }
 
         await Order.updateOne(
-            { orderId },
+            {
+                orderId: verifiedOrderId,
+                orderToken: verifiedOrderToken
+            },
             {
                 $set: {
                     'payment.paymentId': bkashResponse.paymentID
@@ -71,8 +98,15 @@ export async function POST( req: NextRequest ) {
 
         return NextResponse.json({ message: 'request successful', url: bkashResponse.bkashURL })
     } catch (error) {
+        if (error instanceof TypeError){
+            return NextResponse.json(
+                { message: 'Network error' },
+                { status: 500 }
+            )
+        }
+
         return NextResponse.json(
-            {message: 'something went wrong' },
+            { message: 'Unknown error occured.' },
             { status: 500 }
         )
     }

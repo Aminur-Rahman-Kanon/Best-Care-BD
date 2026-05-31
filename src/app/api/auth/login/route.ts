@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { connectDB } from "@/lib/mongodb";
-import Admin from "@/models/Admin";
+import { connectDB } from "@/lib/db/mongodb";
+import Admin from "@/lib/db/models/Admin";
 import { signAdminToken, setAdminCookie } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {

@@ -1,7 +1,7 @@
-import { connectDB } from "@/lib/mongodb";
-import Order from "@/models/Order";
+import { connectDB } from "@/lib/db/mongodb";
+import Order from "@/lib/db/models/Order";
 import OrderTable from "@/components/admin/OrderTable";
-import type { OrderDTO } from "@/types";
+import type { OrderDTO } from "@/types/server";
 
 export default async function AdminOrdersPage() {
   await connectDB();

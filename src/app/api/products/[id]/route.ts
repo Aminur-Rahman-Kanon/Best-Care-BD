@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
-import Product from "@/models/Product";
+import { connectDB } from "@/lib/db/mongodb";
+import Product from "@/lib/db/models/Product";
 import { slugify, ensureUniqueSlug } from "@/lib/slug";
 import { getAdminFromCookie } from "@/lib/auth";
 import { deleteSupabaseFiles } from "@/lib/supabase";

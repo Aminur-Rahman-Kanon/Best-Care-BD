@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
-import Order from "@/models/Order";
+import { connectDB } from "@/lib/db/mongodb";
+import Order from "@/lib/db/models/Order";
 import { getAdminFromCookie } from "@/lib/auth";
 
 type Params = { params: Promise<{ id: string }> };

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { X, Upload } from "lucide-react";
-import type { ProductDTO, ProductImage } from "@/types";
+import type { ProductDTO, ProductImage } from "@/types/server";
 
 interface ProductFormProps {
   product?: ProductDTO;

@@ -1,6 +1,6 @@
-import { connectDB } from "@/lib/mongodb";
-import Product from "@/models/Product";
-import Order from "@/models/Order";
+import { connectDB } from "@/lib/db/mongodb";
+import Product from "@/lib/db/models/Product";
+import Order from "@/lib/db/models/Order";
 import { Package, ShoppingBag, DollarSign } from "lucide-react";
 
 export default async function AdminDashboard() {

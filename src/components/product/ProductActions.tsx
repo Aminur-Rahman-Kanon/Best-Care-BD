@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cart";
-import type { ProductDTO } from "@/types";
+import type { ProductDTO } from "@/types/server";
 
 export default function ProductActions({ product }: { product: ProductDTO }) {
   const router = useRouter();

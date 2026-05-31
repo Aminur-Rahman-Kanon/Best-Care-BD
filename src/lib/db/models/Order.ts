@@ -15,11 +15,12 @@ const OrderItemSchema = new Schema(
 const OrderSchema = new Schema(
   {
     orderId: { type: String, required: true, unique: true, index: true },
+    orderToken: { type: String, required: true },
     customer: {
       fullName: { type: String, required: true },
       address: { type: String, required: true },
       phone: { type: String, required: true },
-      email: { type: String, required: true },
+      email: { type: String },
       paymentMethod: { type: String, required: true },
     },
     items: { type: [OrderItemSchema], required: true },
@@ -30,22 +31,10 @@ const OrderSchema = new Schema(
       default: "pending",
     },
     payment: {
-      paymentMethod: {
-        type: String,
-        enum: ['cash on delivery', 'bkash'],
-        default: 'cash on delivery'
-      },
-      paymentStatus: {
-        type: String,
-        enum: ['pending', 'paid', 'failed'],
-        default: 'pending'
-      },
-      paymentToken: {
-        type: String,
-      },
-      paymentId: {
-        type: String
-      }
+      paymentMethod: { type: String, enum: ['cash on delivery', 'bkash'], default: 'cash on delivery' },
+      paymentStatus: { type: String, enum: ['pending', 'paid', 'initiated', 'failed'], default: 'pending' },
+      paymentToken: { type: String },
+      paymentId: { type: String }
     }
   },
   { timestamps: true }

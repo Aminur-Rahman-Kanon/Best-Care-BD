@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { ProductDTO } from "@/types";
+import type { ProductDTO } from "@/types/server";
 import { useCartStore } from "@/store/cart";
 
 export default function ProductCard({ product }: { product: ProductDTO }) {

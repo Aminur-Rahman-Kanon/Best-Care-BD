@@ -1,5 +1,5 @@
 import ProductCard from "@/components/product/ProductCard";
-import type { ProductDTO } from "@/types";
+import type { ProductDTO } from "@/types/server";
 
 export default function RelatedProducts({
   products,

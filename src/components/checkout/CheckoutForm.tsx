@@ -4,6 +4,8 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCartStore } from "@/store/cart";
+import { createInitialOrder, createBkashPaymentRequest } from '@/lib/client/createPayment';
+import { FormType } from "@/types/client/checkout";
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -12,12 +14,12 @@ export default function CheckoutForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormType>({
     fullName: "",
     address: "",
     phone: "",
     email: "",
-    paymentMethod: "Cash on Delivery",
+    paymentMethod: "Cash on delivery",
   });
 
   const isValid = useMemo(
@@ -36,7 +38,7 @@ export default function CheckoutForm() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isValid || !items.length) return;
 
@@ -44,40 +46,16 @@ export default function CheckoutForm() {
     setError("");
 
     try {
-      const checkoutRes = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer: form,
-          items: items.map((i) => ({
-            productId: i.productId,
-            quantity: i.quantity,
-          })),
-        }),
-      });
-
-      const data = await checkoutRes.json();
-      if (!checkoutRes.ok) throw new Error(data.error || "Checkout failed");
+      const { orderId, orderToken } = await createInitialOrder(form, items);
 
       if (form.paymentMethod === 'Bkash'){
-        const createPaymentRequest = await fetch('/api/bkash/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ orderId: data.orderId })
-        })
+        const redirectUrl = await createBkashPaymentRequest(orderId, orderToken);
   
-        const response = await createPaymentRequest.json();
-        if (!response?.url){
-          throw new Error('payment request failed');
-        }
-  
-        return window.location.href = response.url;
+        return window.location.href = redirectUrl;
       }
       else {
         clearCart();
-        setSuccess(data.orderId);
+        setSuccess(orderId);
         return setTimeout(() => router.push("/"), 5000);
       }
     } catch (err) {

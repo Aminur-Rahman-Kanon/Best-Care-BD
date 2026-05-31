@@ -17,7 +17,7 @@ export default function PaymentFailedPage() {
         Your payment could not be completed. Your cart has been saved — you can
         try again.
       </p>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+      <div className="mt-8 flex flex-col gap-3 justify-center">
         <Link
           href="/checkout"
           className="bg-brand-dark px-6 py-3 text-sm uppercase tracking-wide text-white transition-colors hover:bg-gray-800"

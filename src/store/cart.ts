@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { CartItem } from "@/types";
+import type { CartItem } from "@/types/server";
 
 interface CartState {
   items: CartItem[];

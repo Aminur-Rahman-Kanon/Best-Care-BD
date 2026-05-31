@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { connectDB } from "@/lib/mongodb";
-import Product from "@/models/Product";
+import { connectDB } from "@/lib/db/mongodb";
+import Product from "@/lib/db/models/Product";
 import ProductForm from "@/components/admin/ProductForm";
-import type { ProductDTO } from "@/types";
+import type { ProductDTO } from "@/types/server";
 
 type Props = { params: Promise<{ id: string }> };
 

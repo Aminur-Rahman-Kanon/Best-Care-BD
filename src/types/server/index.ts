@@ -39,6 +39,7 @@ export interface OrderItem {
 export interface OrderDTO {
   _id: string;
   orderId: string;
+  orderToken: string,
   customer: {
     fullName: string;
     address: string;

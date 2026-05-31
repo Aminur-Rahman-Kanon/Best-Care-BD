@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ProductDTO } from "@/types";
+import type { ProductDTO } from "@/types/server";
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Mela";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";

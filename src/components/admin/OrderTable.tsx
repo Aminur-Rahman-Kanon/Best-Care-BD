@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
-import type { OrderDTO } from "@/types";
+import type { OrderDTO } from "@/types/server";
 
 export default function OrderTable({ initialOrders }: { initialOrders: OrderDTO[] }) {
   const [orders, setOrders] = useState(initialOrders);

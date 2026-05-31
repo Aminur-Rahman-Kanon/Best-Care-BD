@@ -1,6 +1,6 @@
-import { connectDB } from "@/lib/mongodb";
-import Product from "@/models/Product";
-import type { ProductDTO } from "@/types";
+import { connectDB } from "@/lib/db/mongodb";
+import Product from "@/lib/db/models/Product";
+import type { ProductDTO } from "@/types/server";
 
 function toDTO(doc: Record<string, unknown>): ProductDTO {
   return {

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
-import { connectDB } from "@/lib/mongodb";
-import Order from "@/models/Order";
-import Product from "@/models/Product";
-import { sendOrderConfirmationEmail } from "@/lib/email";
+import { connectDB } from "@/lib/db/mongodb";
+import Order from "@/lib/db/models/Order";
+import Product from "@/lib/db/models/Product";
+import { OrderDTO } from "@/types/server";
 import { getAdminFromCookie } from "@/lib/auth";
+import { randomUUID, randomBytes } from 'crypto';
+import { createMongooseSession } from '@/app/utilities/utilities';
 
 export async function GET() {
   try {
@@ -22,8 +23,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const session = await createMongooseSession();
+
   try {
-    await connectDB();
+    session.startTransaction();
+
     const body = await req.json();
     const { customer, items } = body;
 
@@ -39,7 +43,7 @@ export async function POST(req: NextRequest) {
     let total = 0;
 
     for (const item of items) {
-      const product = await Product.findById(item.productId).lean();
+      const product = await Product.findById(item.productId).lean().session(session);
       if (!product) {
         return NextResponse.json(
           { error: `Product not found: ${item.productId}` },
@@ -64,19 +68,29 @@ export async function POST(req: NextRequest) {
         image: product.images?.[0]?.url || "",
       });
 
-      await Product.findByIdAndUpdate(product._id, {
-        $inc: { stock: -item.quantity },
-      });
+      await Product.findByIdAndUpdate({
+          _id: item.productId,
+          stock: { $gte: item.quantity }
+        },
+        {
+          $inc: { stock: -item.quantity },
+        },
+        {
+          session
+        });
     }
 
-    const orderId = uuidv4();
-    const order = await Order.create({
+    const orderId = randomUUID();
+    const orderToken = randomBytes(32).toString('hex');
+
+    const order = new Order({
       orderId,
+      orderToken,
       customer: {
         fullName: customer.fullName,
         address: customer.address,
         phone: customer.phone,
-        email: customer.email,
+        email: customer.email || '',
         paymentMethod: customer.paymentMethod || "Cash on Delivery",
       },
       items: orderItems,
@@ -85,24 +99,20 @@ export async function POST(req: NextRequest) {
       paymentStatus: 'pending'
     });
 
-    // try {
-    //   await sendOrderConfirmationEmail({
-    //     orderId,
-    //     fullName: customer.fullName,
-    //     address: customer.address,
-    //     phone: customer.phone,
-    //     email: customer.email,
-    //     paymentMethod: customer.paymentMethod || "Cash on Delivery",
-    //     items: orderItems,
-    //     total,
-    //   });
-    // } catch (emailError) {
-    //   console.error("Email send failed:", emailError);
-    // }
+    await order.save({ session });
 
-    return NextResponse.json({ orderId: order.orderId, _id: order._id }, { status: 201 });
-  } catch (error) {
+    await session.commitTransaction();
+    session.endSession();
+    
+    return NextResponse.json({ orderId: order.orderId, orderToken: order.orderToken }, { status: 201 });
+  } 
+  catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     const message = error instanceof Error ? error.message : "Checkout failed";
     return NextResponse.json({ error: message }, { status: 500 });
+  }
+  finally {
+    await session.endSession()
   }
 }
