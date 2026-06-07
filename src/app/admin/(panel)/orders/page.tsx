@@ -10,6 +10,7 @@ export default async function AdminOrdersPage() {
   const orders: OrderDTO[] = docs.map((d) => ({
     _id: String(d._id),
     orderId: d.orderId as string,
+    orderToken: d.orderToken as string,
     customer: d.customer as OrderDTO["customer"],
     items: d.items as OrderDTO["items"],
     total: d.total as number,
