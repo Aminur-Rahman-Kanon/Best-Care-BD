@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db/mongodb";
 import Order from "@/lib/db/models/Order";
 import Product from "@/lib/db/models/Product";
-import { OrderDTO } from "@/types/server";
 import { getAdminFromCookie } from "@/lib/auth";
 import { randomUUID, randomBytes } from 'crypto';
 import { createMongooseSession } from '@/app/utilities/utilities';
@@ -44,13 +43,17 @@ export async function POST(req: NextRequest) {
 
     for (const item of items) {
       const product = await Product.findById(item.productId).lean().session(session);
+      
       if (!product) {
+        await session.abortTransaction();
         return NextResponse.json(
           { error: `Product not found: ${item.productId}` },
           { status: 400 }
         );
       }
+
       if (product.stock < item.quantity) {
+        await session.abortTransaction();
         return NextResponse.json(
           { error: `Insufficient stock for ${product.title}` },
           { status: 400 }
@@ -68,7 +71,7 @@ export async function POST(req: NextRequest) {
         image: product.images?.[0]?.url || "",
       });
 
-      await Product.findByIdAndUpdate({
+      const orders = await Product.updateOne({
           _id: item.productId,
           stock: { $gte: item.quantity }
         },
@@ -78,6 +81,15 @@ export async function POST(req: NextRequest) {
         {
           session
         });
+
+      if (orders.modifiedCount !== 1) {
+        await session.abortTransaction();
+
+        return NextResponse.json(
+          { message: 'Stock ran out during checkout!' },
+          { status: 409 }
+        )
+      }
     }
 
     const orderId = randomUUID();
@@ -100,15 +112,12 @@ export async function POST(req: NextRequest) {
     });
 
     await order.save({ session });
-
     await session.commitTransaction();
-    session.endSession();
     
     return NextResponse.json({ orderId: order.orderId, orderToken: order.orderToken }, { status: 201 });
   } 
   catch (error) {
     await session.abortTransaction();
-    session.endSession();
     const message = error instanceof Error ? error.message : "Checkout failed";
     return NextResponse.json({ error: message }, { status: 500 });
   }

@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
         
         const query = req.nextUrl.searchParams;
         const paymentId = query.get('paymentID');
+        
         const myUrl = process.env.APP_URL ?? (
             process.env.NODE_ENV === 'development' ?
             'http://localhost:3000'
@@ -60,7 +61,7 @@ export async function GET(req: NextRequest) {
                 },
                 {
                     $set: {
-                        'payment.paymentStatus': 'success'
+                        'payment.paymentStatus': 'paid'
                     }
                 }
             )

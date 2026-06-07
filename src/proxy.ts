@@ -16,7 +16,7 @@ export function proxy(req: NextRequest) {
   }
 
   try {
-    const test = jwt.verify(token, SECRET);
+    jwt.verify(token, SECRET);
     return NextResponse.next();
   } catch {
     return NextResponse.redirect(new URL("/admin/login", req.url));

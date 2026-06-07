@@ -5,7 +5,7 @@ import { authHeaders, bkashConfig } from '@/app/utilities/utilities';
 
 export async function POST( req: NextRequest ) {
     try {
-        connectDB();
+        await connectDB();
 
         const { orderId, orderToken } = await req.json();
     
@@ -17,7 +17,7 @@ export async function POST( req: NextRequest ) {
         const orders = await Order.findOne({
             orderId,
             orderToken
-        });
+        }).lean();
     
         if (!orders) return NextResponse.json(
             { message: 'Order not found' },
@@ -68,7 +68,10 @@ export async function POST( req: NextRequest ) {
             })
         })
 
-        if (!bkashResponseBody.ok) throw new Error('Bkash token creation failed.')
+        if (!bkashResponseBody.ok) return NextResponse.json(
+            { message: 'Bkash token creation failed.' },
+            { status: 401 }
+        )
 
         const bkashResponse = await bkashResponseBody.json();
 
@@ -84,16 +87,24 @@ export async function POST( req: NextRequest ) {
             )
         }
 
-        await Order.updateOne(
+        const order = await Order.findOneAndUpdate(
             {
                 orderId: verifiedOrderId,
-                orderToken: verifiedOrderToken
+                orderToken: verifiedOrderToken,
+                'payment.paymentStatus': 'pending'
             },
             {
                 $set: {
-                    'payment.paymentId': bkashResponse.paymentID
+                    'payment.paymentId': bkashResponse.paymentID,
+                    'payment.paymentStatus': 'initiated'
                 }
-            }
+            },
+            { new: true }
+        )
+
+        if (!order) return NextResponse.json(
+            { message: 'Payment already initiated or invalid state' },
+            { status: 409 }
         )
 
         return NextResponse.json({ message: 'request successful', url: bkashResponse.bkashURL })

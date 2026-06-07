@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ProductDTO } from "@/types/server";
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Mela";
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Best Care BD";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export function getSiteUrl(path = ""): string {
@@ -48,7 +48,7 @@ export function buildDefaultMetadata(): Metadata {
       template: `%s | ${siteName}`,
     },
     description:
-      "Shop quality products at Mela. Browse our collection and order with cash on delivery.",
+      "Shop quality products at Best Care BD. Browse our collection and order with cash on delivery.",
     metadataBase: new URL(siteUrl),
     alternates: { canonical: siteUrl },
     openGraph: {
@@ -56,12 +56,12 @@ export function buildDefaultMetadata(): Metadata {
       url: siteUrl,
       siteName,
       title: `${siteName} — Online Shop`,
-      description: "Shop quality products at Mela.",
+      description: "Shop quality products at Best Care BD.",
     },
     twitter: {
       card: "summary_large_image",
       title: `${siteName} — Online Shop`,
-      description: "Shop quality products at Mela.",
+      description: "Shop quality products at Best Care BD.",
     },
     robots: { index: true, follow: true },
   };
