@@ -60,6 +60,7 @@ export interface BannerDTO {
   ctaText?: string;
   ctaLink?: string;
   imageUrl: string;
+  srcSetList: string
   order: number;
   active: boolean;
 }

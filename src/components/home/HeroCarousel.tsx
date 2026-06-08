@@ -12,30 +12,31 @@ const defaultBanners: BannerDTO[] = [
     subtitle: "Discover our latest collection",
     ctaText: "Shop Now",
     ctaLink: "/",
-    imageUrl: "/images/hero/banner-1.png",
+    imageUrl: "/images/hero/banner_1_sm.png",
+    srcSetList: "/images/hero/banner_1_sm.png 1x, /images/hero/banner_1_lg.png 2x",
     order: 0,
     active: true,
   },
-  {
-    _id: "2",
-    title: "Big Sale",
-    subtitle: "Selected items — limited time",
-    ctaText: "Shop Now",
-    ctaLink: "/",
-    imageUrl: "/images/hero/banner-2.png",
-    order: 1,
-    active: true,
-  },
-  {
-    _id: "3",
-    title: "Treat Yourself",
-    subtitle: "Up to 20% off selected products",
-    ctaText: "Shop Now",
-    ctaLink: "/",
-    imageUrl: "/images/hero/banner-3.png",
-    order: 2,
-    active: true,
-  },
+  // {
+  //   _id: "2",
+  //   title: "Big Sale",
+  //   subtitle: "Selected items — limited time",
+  //   ctaText: "Shop Now",
+  //   ctaLink: "/",
+  //   imageUrl: "/images/hero/banner-2.png",
+  //   order: 1,
+  //   active: true,
+  // },
+  // {
+  //   _id: "3",
+  //   title: "Treat Yourself",
+  //   subtitle: "Up to 20% off selected products",
+  //   ctaText: "Shop Now",
+  //   ctaLink: "/",
+  //   imageUrl: "/images/hero/banner-3.png",
+  //   order: 2,
+  //   active: true,
+  // },
 ];
 
 export default function HeroCarousel({
@@ -61,9 +62,10 @@ export default function HeroCarousel({
               key={banner._id}
               className="embla__slide min-w-0 flex-[0_0_100%]"
             >
-              <div className="relative w-full aspect-[3/2] sm:aspect-[3/1]">
+              <div className="relative w-full aspect-[16/9] sm:aspect-[3/1]">
                 <Image
                   src={banner.imageUrl}
+                  // srcSet={banner.srcSetList.map((src) => `${src.url} ${src.width}w`).join(", ")}
                   alt={banner.title || "Promotional banner"}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1400px"

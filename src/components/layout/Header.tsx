@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faMagnifyingGlass, faBars, faXmark, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faBars, faXmark, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useCallback, useEffect, useState, Suspense } from "react";
 import CartBadge from "./CartBadge";
 import MobileMenu from "./MobileMenu";
+import Image from "next/image";
 
 function SearchPanel({
   open,
@@ -124,10 +125,12 @@ function HeaderInner() {
             </nav>
           </div>
 
-          <Link href="/" className="flex justify-center" aria-label="Mela Home">
-            <span className="text-2xl font-light uppercase tracking-[0.3em] text-brand-dark md:text-3xl">
-              Mela
-            </span>
+          <Link href="/" className="w-full flex justify-center" aria-label="best care bd logo">
+            <Image src="/images/logo/logo_3.png"
+                     alt="best care bd logo"
+                     width={100}
+                     height={100}
+                     className="w-[80px] md:w-[120px] h-auto object-cover" />
           </Link>
 
           <div className="flex items-center justify-end gap-3">

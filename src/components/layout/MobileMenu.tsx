@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faInstagramSquare, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from "react";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -49,9 +50,13 @@ export default function MobileMenu({
         aria-hidden={!open}
       >
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
-          <span className="text-xl font-light uppercase tracking-[0.3em] text-brand-dark">
-            Mela
-          </span>
+          <div className="flex justify-center">
+              <Image src="/images/logo/logo_3.png"
+                       alt="best care bd logo"
+                       width={100}
+                       height={100}
+                       className="w-[80px] md:w-[120px] h-auto object-cover" />
+          </div>
           <button
             type="button"
             onClick={onClose}
