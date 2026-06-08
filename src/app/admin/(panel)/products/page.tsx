@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from "next/link";
 import { connectDB } from "@/lib/db/mongodb";
 import Product from "@/lib/db/models/Product";
@@ -22,6 +24,8 @@ export default async function AdminProductsPage() {
     seoDescription: (d.seoDescription as string) || "",
     createdAt: (d.createdAt as Date).toISOString(),
   }));
+
+  console.log("Admin Products Page", Date.now());
 
   return (
     <div>
