@@ -20,6 +20,7 @@ async function getBanners(): Promise<BannerDTO[]> {
       ctaText: (b.ctaText as string) || "Shop Now",
       ctaLink: (b.ctaLink as string) || "/",
       imageUrl: b.imageUrl as string,
+      srcSetList: b.srcSetList as string,
       order: b.order as number,
       active: b.active as boolean,
     }));
