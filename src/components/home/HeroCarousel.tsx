@@ -95,12 +95,12 @@ function Slide1({ isActive }: { isActive: boolean }) {
                 }`}
                 style={{ transitionDelay: '200ms' }}
               >
-                <div className="relative aspect-square aspect-[3/2] bg-white rounded-2xl shadow-2xl p-4 md:p-6 lg:p-8">
+                <div className="max-w-[550px] mx-auto relative aspect-[3/2.5] bg-white rounded-2xl shadow-2xl p-4 md:p-6 lg:p-8">
                   <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs md:text-sm font-bold">
                     SALE
                   </div>
                   <div className="h-full flex items-center justify-center bg-white rounded-xl">
-                    <Image src={'/images/hero/banner_1_1.png'}
+                    <Image src={'/images/hero/banner_1_1.jpg'}
                            alt="football jersey"
                            width={100}
                            height={100}
@@ -330,7 +330,7 @@ function Slide3({ isActive }: { isActive: boolean }) {
 export default function HeroCarousel() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    // Autoplay({ delay: 5000, stopOnInteraction: false }),
+    Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
 
   useEffect(() => {
