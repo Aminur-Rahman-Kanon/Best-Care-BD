@@ -34,7 +34,7 @@ export default function ProductActions({ product }: { product: ProductDTO }) {
         type="button"
         onClick={handleAddToCart}
         disabled={outOfStock}
-        className="h-12 flex-1 rounded border border-brand-dark bg-white text-sm font-semibold uppercase tracking-wide text-brand-dark transition-colors hover:bg-brand-dark hover:text-white disabled:opacity-50"
+        className="w-full min-w-[200px] h-[40px] flex justify-center items-center rounded border border-brand-dark bg-white text-sm font-semibold uppercase tracking-wide text-brand-dark transition-colors hover:bg-brand-dark hover:text-white disabled:opacity-50"
       >
         Add to Cart
       </button>
@@ -42,7 +42,7 @@ export default function ProductActions({ product }: { product: ProductDTO }) {
         type="button"
         onClick={handleBuyNow}
         disabled={outOfStock}
-        className="h-12 flex-1 rounded bg-brand-dark text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-gray-800 disabled:opacity-50"
+        className="w-full min-w-[200px] h-[40px] flex justify-center items-center rounded bg-brand-dark text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-gray-800 disabled:opacity-50"
       >
         Buy Now
       </button>

@@ -1,4 +1,4 @@
-# Mela — E-commerce
+# Best Care BD — E-commerce
 
 Production-ready Next.js 15 e-commerce storefront with SEO-optimized product pages, admin panel, MongoDB, Supabase image storage, and Nodemailer order emails.
 
@@ -17,7 +17,7 @@ Production-ready Next.js 15 e-commerce storefront with SEO-optimized product pag
 ### 1. Install dependencies
 
 ```bash
-cd /home/frostbite/Documents/web_projects/mela
+cd /home/frostbite/Documents/web_projects/best-Care-bd
 npm install
 ```
 
@@ -100,4 +100,4 @@ src/
 
 ## License
 
-Private — Mela Shop
+Private — Best Care BD Shop

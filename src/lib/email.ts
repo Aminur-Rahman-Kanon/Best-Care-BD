@@ -69,7 +69,7 @@ export async function sendOrderConfirmationEmail(data: OrderEmailData) {
         <tbody>${buildItemsHtml(data.items)}</tbody>
       </table>
       <p style="font-size:18px;margin-top:16px;"><strong>Total: ৳${data.total.toLocaleString()}</strong></p>
-      <p style="color:#6b7280;font-size:14px;">— Mela Shop</p>
+      <p style="color:#6b7280;font-size:14px;">— Best Care BD Shop</p>
     </div>
   `;
 

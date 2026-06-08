@@ -104,13 +104,13 @@ export default function CartView() {
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/checkout"
-            className="flex h-12 flex-1 items-center justify-center bg-brand-dark text-sm font-semibold uppercase tracking-wide text-white hover:bg-gray-800 transition-colors"
+            className="w-full min-w-[200px] h-[40px] flex justify-center items-center bg-brand-dark text-sm font-semibold uppercase tracking-wide text-white hover:bg-gray-800 transition-colors"
           >
             Checkout
           </Link>
           <Link
             href="/"
-            className="flex h-12 flex-1 items-center justify-center border border-brand-dark text-sm font-semibold uppercase tracking-wide hover:bg-brand-dark hover:text-white transition-colors"
+            className="w-full min-w-[200px] h-[40px] flex justify-center items-center border border-brand-dark text-sm font-semibold uppercase tracking-wide hover:bg-brand-dark hover:text-white transition-colors"
           >
             Continue Shopping
           </Link>

@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
         className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
       >
         <h1 className="mb-6 text-center text-2xl font-light uppercase tracking-wider">
-          Mela Admin
+          Best Care BD Admin
         </h1>
         {error && (
           <p className="mb-4 text-center text-sm text-red-600">{error}</p>

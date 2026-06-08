@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1400px] px-4 py-10">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="text-center md:text-left">
-            <p className="text-xl font-light uppercase tracking-[0.2em] text-brand-dark">Mela</p>
+            <p className="text-xl font-light uppercase tracking-[0.2em] text-brand-dark">Best Care BD</p>
             <p className="mt-2 text-sm text-brand-gray">
               Quality products delivered to your doorstep.
             </p>
@@ -21,7 +21,7 @@ export default function Footer() {
           </nav>
         </div>
         <p className="mt-8 text-center text-xs text-brand-gray">
-          © {year} Mela. All rights reserved.
+          © {year} Best Care BD. All rights reserved.
         </p>
       </div>
     </footer>

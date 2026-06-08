@@ -1,32 +1,9 @@
 import HeroCarousel from "@/components/home/HeroCarousel";
 import ProductGrid from "@/components/home/ProductGrid";
 import { getProducts } from "@/lib/products";
-import { connectDB } from "@/lib/db/mongodb";
-import Banner from "@/lib/db/models/Banner";
-import type { BannerDTO } from "@/types/server";
 
 interface HomeProps {
   searchParams: Promise<{ q?: string }>;
-}
-
-async function getBanners(): Promise<BannerDTO[]> {
-  try {
-    await connectDB();
-    const docs = await Banner.find({ active: true }).sort({ order: 1 }).lean();
-    return docs.map((b) => ({
-      _id: String(b._id),
-      title: b.title as string,
-      subtitle: (b.subtitle as string) || "",
-      ctaText: (b.ctaText as string) || "Shop Now",
-      ctaLink: (b.ctaLink as string) || "/",
-      imageUrl: b.imageUrl as string,
-      srcSetList: b.srcSetList as string,
-      order: b.order as number,
-      active: b.active as boolean,
-    }));
-  } catch {
-    return [];
-  }
 }
 
 export default async function HomePage({ searchParams }: HomeProps) {
@@ -35,23 +12,18 @@ export default async function HomePage({ searchParams }: HomeProps) {
 
   let products: Awaited<ReturnType<typeof getProducts>>["products"] = [];
   let hasMore = false;
-  let banners: BannerDTO[] = [];
 
   try {
-    const [productData, bannerData] = await Promise.all([
-      getProducts(1, 12, search || undefined),
-      getBanners(),
-    ]);
+    const productData = await getProducts(1, 12, search || undefined);
     products = productData.products;
     hasMore = productData.hasMore;
-    banners = bannerData;
   } catch {
     // Build/startup without DB — render empty state
   }
 
   return (
     <>
-      <HeroCarousel banners={banners.length ? banners : undefined} />
+      <HeroCarousel />
       <ProductGrid
         initialProducts={products}
         initialHasMore={hasMore}

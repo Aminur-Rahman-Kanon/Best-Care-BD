@@ -22,7 +22,7 @@ export default function AdminNav() {
 
   return (
     <aside className="w-56 flex-shrink-0 border-r border-gray-200 bg-gray-50 p-4">
-      <p className="mb-6 text-lg font-semibold uppercase tracking-wider">Mela Admin</p>
+      <p className="mb-6 text-lg font-semibold uppercase tracking-wider">Best Care BD Admin</p>
       <nav className="space-y-1">
         {links.map(({ href, label, icon: Icon }) => (
           <Link

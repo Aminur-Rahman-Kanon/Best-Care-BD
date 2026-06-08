@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn about Mela — quality products delivered to your doorstep.",
+  description: "Learn about Best Care BD — quality products delivered to your doorstep.",
 };
 
 export default function AboutPage() {
@@ -13,7 +13,7 @@ export default function AboutPage() {
       </h1>
       <div className="space-y-6 text-brand-gray leading-relaxed">
         <p>
-          Welcome to Mela — your destination for quality products delivered
+          Welcome to Best Care BD — your destination for quality products delivered
           straight to your doorstep. We believe shopping should be simple,
           trustworthy, and enjoyable.
         </p>
@@ -23,7 +23,7 @@ export default function AboutPage() {
           experience and reliable delivery across Bangladesh.
         </p>
         <p>
-          Whether you&apos;re treating yourself or sending a gift, Mela is here
+          Whether you&apos;re treating yourself or sending a gift, Best Care BD is here
           to help you find what you need. Thank you for choosing us.
         </p>
       </div>

@@ -19,7 +19,7 @@ async function seed() {
 
   await mongoose.connect(uri);
 
-  const email = process.env.ADMIN_EMAIL || "admin@mela.com";
+  const email = process.env.ADMIN_EMAIL || "admin@bestcarebd.com";
   const password = process.env.ADMIN_PASSWORD || "change-me-secure-password";
   const name = process.env.ADMIN_NAME || "Admin";
 
