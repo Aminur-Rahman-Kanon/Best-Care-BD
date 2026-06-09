@@ -77,25 +77,26 @@ function Slide1({ isActive }: { isActive: boolean }) {
           <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-2 md:gap-12">
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left">
-              <p className="text-xs sm:text-sm md:text-base text-amber-900 font-semibold mb-2 tracking-wider uppercase">
+              <p className="text-xs text-[#fb8d50] sm:text-sm md:text-base font-semibold mb-2 tracking-wider uppercase">
                 Summer Collection 2024
               </p>
               <h1
-                className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 ${
+                className={`text-2xl text-[#ff955a] sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 ${
                   isActive ? 'animate-fade-in' : 'opacity-0'
                 }`}
                 style={{ animationDelay: '100ms' }}
               >
                 Up to 50% Off
               </h1>
-              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-900 mb-6 max-w-md">
+              <p className="text-xs text-gray-100 sm:text-sm md:text-base lg:text-lg md:text-gray-900 mb-6 max-w-md">
                 Discover our exclusive summer collection with amazing discounts on all items.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                 <button className="w-full sm:w-[200px] h-[40px] bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors text-xs md:text-base font-medium flex justify-center items-center">
                   Shop Now
                 </button>
-                <button className="w-full sm:w-[200px] h-[40px] border-2 border-gray-200 text-gray-200 px-6 py-3 rounded-lg hover:bg-gray-900 hover:text-white transition-colors text-xs md:text-base font-medium flex justify-center items-center">
+                <button className="w-full sm:w-[200px] h-[40px] border-2 border-[#ff955a] text-[#ff955a] md:border-gray-800 md:text-gray-800 px-6 py-3 rounded-lg 
+                                  hover:bg-gray-900 hover:text-white transition-colors text-xs md:text-base font-medium flex justify-center items-center">
                   View Catalog
                 </button>
               </div>
@@ -155,7 +156,7 @@ function Slide2({ isActive }: { isActive: boolean }) {
   return (
     <>
       <style>{customStyles}</style>
-      <div className="relative w-full h-full aspect-[3/2] bg-gradient-to-r from-blue-50 to-indigo-100 overflow-hidden">
+      <div className="relative w-full h-full aspect-[3/2] bg-gradient-to-r from-[#F9DFDF] to-[#FCF8F8] overflow-hidden">
         <div className="w-full h-full absolute inset-0 flex items-center justify-center px-4 md:px-8 lg:px-16">
           <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
             {/* Left Content */}
@@ -248,8 +249,22 @@ function Slide3({ isActive }: { isActive: boolean }) {
   return (
     <>
       <style>{customStyles}</style>
-      <div className="relative w-full h-full bg-gradient-to-r from-emerald-50 to-teal-100 overflow-hidden">
+      <div className="relative w-full h-full overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 lg:px-16">
+        <div className="absolute inset-0 w-full h-full z-[-1]">
+            <picture>
+              <source
+                media="(min-width: 768px)"
+                srcSet="/images/hero/banner_3_1.png"
+              />
+
+              <img
+                src="/images/hero/banner_3_2.png"
+                alt="banner"
+                className="w-full h-full object-cover"
+              />
+            </picture>
+          </div>
           <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left">
@@ -257,14 +272,14 @@ function Slide3({ isActive }: { isActive: boolean }) {
                 Top Rated
               </p>
               <h1
-                className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 ${
+                className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-300 mb-4 ${
                   isActive ? 'animate-slide-in-left' : 'opacity-0'
                 }`}
                 style={{ animationDelay: '100ms' }}
               >
                 Best Sellers
               </h1>
-              <p className="text-sm md:text-base lg:text-lg text-gray-700 mb-6 max-w-md">
+              <p className="text-sm md:text-base lg:text-lg text-gray-200 mb-6 max-w-md">
                 Shop our most loved products chosen by thousands of happy customers.
               </p>
               <button className="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition-colors text-sm md:text-base font-medium">
@@ -274,7 +289,7 @@ function Slide3({ isActive }: { isActive: boolean }) {
 
             {/* Right Content - Product List */}
             <div className="hidden md:flex flex-1 relative">
-              <div
+              {/* <div
                 className={`transition-all duration-700 ease-out ${
                   isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
                 }`}
@@ -333,7 +348,7 @@ function Slide3({ isActive }: { isActive: boolean }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -345,7 +360,7 @@ function Slide3({ isActive }: { isActive: boolean }) {
 export default function HeroCarousel() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    // Autoplay({ delay: 5000, stopOnInteraction: false }),
+    Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
 
   useEffect(() => {

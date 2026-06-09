@@ -130,7 +130,7 @@ function HeaderInner() {
                      alt="best care bd logo"
                      width={100}
                      height={100}
-                     className="w-[80px] md:w-[120px] h-auto object-cover" />
+                     className="w-[65px] md:w-[85px] h-auto object-cover" />
           </Link>
 
           <div className="flex items-center justify-end gap-3">
