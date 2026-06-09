@@ -109,6 +109,7 @@ export async function POST( req: NextRequest ) {
 
         return NextResponse.json({ message: 'request successful', url: bkashResponse.bkashURL })
     } catch (error) {
+        console.log(error);
         if (error instanceof TypeError){
             return NextResponse.json(
                 { message: 'Network error' },
