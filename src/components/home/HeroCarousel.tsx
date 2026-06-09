@@ -58,12 +58,26 @@ function Slide1({ isActive }: { isActive: boolean }) {
   return (
     <>
       <style>{customStyles}</style>
-      <div className="relative w-full h-full bg-gradient-to-r from-amber-50 to-orange-100 overflow-hidden">
+      <div className="relative w-full h-full overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 lg:px-16">
+          <div className="absolute inset-0 w-full h-full z-[-1]">
+            <picture>
+              <source
+                media="(min-width: 768px)"
+                srcSet="/images/hero/banner_1_5.png"
+              />
+
+              <img
+                src="/images/hero/banner_1_6.png"
+                alt="banner"
+                className="w-full h-full object-cover"
+              />
+            </picture>
+          </div>
           <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-2 md:gap-12">
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left">
-              <p className="text-xs sm:text-sm md:text-base text-amber-700 font-semibold mb-2 tracking-wider uppercase">
+              <p className="text-xs sm:text-sm md:text-base text-amber-900 font-semibold mb-2 tracking-wider uppercase">
                 Summer Collection 2024
               </p>
               <h1
@@ -74,14 +88,14 @@ function Slide1({ isActive }: { isActive: boolean }) {
               >
                 Up to 50% Off
               </h1>
-              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-700 mb-6 max-w-md">
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-900 mb-6 max-w-md">
                 Discover our exclusive summer collection with amazing discounts on all items.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                 <button className="w-full sm:w-[200px] h-[40px] bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors text-xs md:text-base font-medium flex justify-center items-center">
                   Shop Now
                 </button>
-                <button className="w-full sm:w-[200px] h-[40px] border border-gray-900 text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-900 hover:text-white transition-colors text-xs md:text-base font-medium flex justify-center items-center">
+                <button className="w-full sm:w-[200px] h-[40px] border-2 border-gray-200 text-gray-200 px-6 py-3 rounded-lg hover:bg-gray-900 hover:text-white transition-colors text-xs md:text-base font-medium flex justify-center items-center">
                   View Catalog
                 </button>
               </div>
@@ -89,7 +103,7 @@ function Slide1({ isActive }: { isActive: boolean }) {
 
             {/* Right Content - Product Showcase */}
             <div className="hidden md:block flex-1 relative">
-              <div
+              {/* <div
                 className={`transition-all duration-700 ease-out ${
                   isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
                 }`}
@@ -100,14 +114,15 @@ function Slide1({ isActive }: { isActive: boolean }) {
                     SALE
                   </div>
                   <div className="h-full flex items-center justify-center bg-white rounded-xl">
-                    <Image src={'/images/hero/banner_1_1.jpg'}
+                    <Image src={'/images/hero/banner_1_4.jpg'}
                            alt="football jersey"
                            width={100}
                            height={100}
+                           unoptimized
                            className="w-full h-full object-cover" />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -330,7 +345,7 @@ function Slide3({ isActive }: { isActive: boolean }) {
 export default function HeroCarousel() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
+    // Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
 
   useEffect(() => {
