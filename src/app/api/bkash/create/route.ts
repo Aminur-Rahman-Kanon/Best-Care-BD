@@ -74,6 +74,7 @@ export async function POST( req: NextRequest ) {
         )
 
         const bkashResponse = await bkashResponseBody.json();
+        console.log(bkashResponse);
 
         if (
             bkashResponse.statusCode !== '0000' ||
